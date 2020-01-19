@@ -1,0 +1,18 @@
+version: "3.7"
+services: 
+  firefly_iii_app: 
+    image: jc5x/firefly-iii:latest
+    links:
+      - firefly_iii_db
+    ports: 
+      - "83:80"
+    volumes: 
+      - ${USER_HOME}/firefly/export:/var/www/firefly-iii/storage/export
+      - ${USER_HOME}/firefly/upload:/var/www/firefly-iii/storage/upload
+  firefly_iii_db: 
+    image: "postgres:10"
+    environment:
+      - POSTGRES_PASSWORD=${FIREFLY_DB_PASSWORD}
+      - POSTGRES_USER=${FIREFLY_DB_USER}
+    volumes: 
+      - ${FIREFLY_DB_PATH}:/var/lib/postgresql/data
